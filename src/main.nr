@@ -1,14 +1,14 @@
 use dep::std;
 
-const N: Field = 4;
-const numHashers: Field = 3;
+const N: Field = 32;
+const numHashers: Field = 31;
 
+// TODO: hashers should be dynamically sized based on 
+// let numHashers = totalLeaves - 1;
 fn merkle_root(leaves: [Field]) -> Field {
     let totalLeaves : const Field = std::array::len(leaves);
 
-    // TODO: hashers should be dynamically sized based on 
-    // let numHashers = totalLeaves - 1;
-    let mut hashers : [Field; numHashers] = [0, 0, 0];
+    let mut hashers : [Field; numHashers] = [0; 31];
 
     let numLeafHashers : const Field = totalLeaves / 2;
     let numIntermediateHashers : const Field = numLeafHashers - 1;
@@ -33,7 +33,7 @@ fn process_events(
     tos: [Field],
     values: [Field],
 ) -> [Field; 2] {
-    let mut balances : [Field; N] = [0, 0, 0, 0];
+    let mut balances : [Field; N] = [0 ; 32];
 
     for i in 0..N {
         let mut fromBalance = 0;
@@ -62,7 +62,7 @@ fn process_events(
     };
 
     let mut eventHash = 0;
-    let mut stateHashes : [Field; N] = [0, 0, 0, 0];
+    let mut stateHashes : [Field; N] = [0 ; 32];
 
     for i in 0..N {
         // If both accounts are zero, these are just default signals; we have processed all events
